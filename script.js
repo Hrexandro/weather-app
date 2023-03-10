@@ -17,6 +17,22 @@ let currentLocation = {
   lat: 53.0137
 }
 
+let day = new Date()
+let time = day.getHours()//change it to timezone according to coordinates later
+//timezone:
+//http://api.geonames.org/timezone?lat=53.0137&lng=18.5981&username=hrexandro
+function timecheck(timeData){
+  if (timeData > 16 && timeData < 22){
+    document.querySelector("html").setAttribute("id", "evening")
+  } else if (timeData > 4 && timeData < 16){
+    document.querySelector("html").setAttribute("id", "morning")
+  } else {
+    document.querySelector("html").setAttribute("id", "night")
+  }
+}
+
+timecheck(time)
+
 const currentTemperature = document.getElementById("current-temperature")
 const weather = document.getElementById("weather")
 const humidity = document.getElementById("humidity")
