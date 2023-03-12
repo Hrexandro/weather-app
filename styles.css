@@ -22,3 +22,7 @@ html {
 #night {
     background-image: url(./images/night.jpg);
 }
+
+p {
+    color: white;
+}
