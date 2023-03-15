@@ -8,6 +8,12 @@
   //use geocoding to get location https://openweathermap.org/api/geocoding-api
   //then using the longitude and latitude fetch the weather data
 
+const currentTemperature = document.getElementById("current-temperature")
+const weather = document.getElementById("weather")
+const humidity = document.getElementById("humidity")
+const feelsLike = document.getElementById("feels-like")
+const windSpeed = document.getElementById("wind-speed")
+const town = document.getElementById('town')
 let currentWeather = null//not used yet
 let units = "metric"
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
@@ -16,6 +22,30 @@ let currentLocation = {
   lon: 18.5981,
   lat: 53.0137
 }
+let currentTown = "Toruń"
+let dateInPlace = new Date()
+
+async function setCurrentTown (townToBeSet){
+  try {
+    let response = await fetch(`http://api.geonames.org/searchJSON?q=${townToBeSet}&maxRows=1&username=${geonamesUserName}`)
+    response.json().then(function (response){
+      console.log(response)
+      currentLocation.lon = response.geonames[0].lng
+      currentLocation.lat = response.geonames[0].lat
+      currentTown = townToBeSet
+      town.innerText = townToBeSet
+      displayWeather()
+      updateTime()
+    })
+  } catch (error) {
+    console.log(error)
+  }
+  // town.innerText = townToBeSet
+  // //get lon and lat from town
+  // updateTime()
+}
+
+setCurrentTown(currentTown)
 
 // let currentLocation = {//NYC for test purposes
 //   lon: -73.935242,
@@ -35,11 +65,15 @@ async function getTime(){
 
 }
 
-getTime().then((data)=>{
-  let dateInPlace = new Date(timeData.time)
-  console.log(dateInPlace.getHours())
-  setBackgroundAccordingToTime(dateInPlace.getHours())
-})
+function updateTime(){
+  getTime().then((data)=>{
+    dateInPlace = new Date(timeData.time)
+    console.log(dateInPlace.getHours())
+    setBackgroundAccordingToTime(dateInPlace.getHours())
+  })
+
+}
+updateTime()
 
 
 
@@ -55,16 +89,6 @@ function setBackgroundAccordingToTime(timeData){
 }
 
 setBackgroundAccordingToTime(time)
-
-
-
-
-const currentTemperature = document.getElementById("current-temperature")
-const weather = document.getElementById("weather")
-const humidity = document.getElementById("humidity")
-const feelsLike = document.getElementById("feels-like")
-const windSpeed = document.getElementById("wind-speed")
-
 
 function displayWeatherParameter (variable, value) {
   variable.innerText = value
