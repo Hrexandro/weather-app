@@ -26,7 +26,7 @@ townSearchButton.addEventListener('click',()=>{
 
 async function setCurrentTown (townToBeSet){
   try {
-    let response = await fetch(`https://api.geonames.org/searchJSON?q=${townToBeSet}&maxRows=1&username=${geonamesUserName}`)
+    let response = await fetch(`https://secure.geonames.org/searchJSON?q=${townToBeSet}&maxRows=1&username=${geonamesUserName}`)
     response.json().then(function (response){
       console.log(response)
       currentLocation.lon = response.geonames[0].lng
@@ -52,7 +52,7 @@ let time = day.getHours()//change it to timezone according to coordinates later
 
 async function getTime(){
   try {
-    let response = await fetch(`https://api.geonames.org/timezoneJSON?lat=${currentLocation.lat}&lng=${currentLocation.lon}&username=${geonamesUserName}`)
+    let response = await fetch(`https://secure.geonames.org/timezoneJSON?lat=${currentLocation.lat}&lng=${currentLocation.lon}&username=${geonamesUserName}`)
     return timeData = await response.json()
   } catch (error) {
       console.log(error)
