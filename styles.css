@@ -9,6 +9,8 @@ html {
 
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center
 }
 
 #morning {
@@ -17,6 +19,7 @@ html {
 
 #evening {
     background-image: url(./images/evening.jpg);
+
 }
 
 #night {
@@ -24,8 +27,10 @@ html {
 }
 
 #weather {
-    font-size: xx-large;
+    font-size: 6vh;
+    margin: 0;
 }
+
 p {
     color: white;
 }
@@ -48,5 +53,10 @@ p {
     border: none;
     background-color: transparent;
     outline: none;
+}
+
+#current-temperature {
+    font-size: 4vh;
+    margin: 0;
 }
 

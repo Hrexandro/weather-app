@@ -1,3 +1,9 @@
+//to do:
+//add loading
+//add error
+//better font
+//icons
+
 const currentTemperature = document.getElementById("current-temperature")
 const weather = document.getElementById("weather")
 const humidity = document.getElementById("humidity")
@@ -22,6 +28,7 @@ let dateInPlace = new Date()
 //town error - has to be 'city', 'city, state' or 'city, country'
 townSearchButton.addEventListener('click',()=>{
   setCurrentTown(townSearch.value)
+  townSearch.value = ""
 })
 
 async function setCurrentTown (townToBeSet){
@@ -31,8 +38,7 @@ async function setCurrentTown (townToBeSet){
       console.log(response)
       currentLocation.lon = response.geonames[0].lng
       currentLocation.lat = response.geonames[0].lat
-      currentTown = townToBeSet
-
+      currentTown = response.geonames[0].toponymName + (response.geonames[0].countryName ? `, ${response.geonames[0].countryName}` : "")
       displayUpdatedData()
     })
   } catch (error) {
@@ -41,14 +47,6 @@ async function setCurrentTown (townToBeSet){
 }
 
 setCurrentTown(currentTown)
-
-// let currentLocation = {//NYC for test purposes
-//   lon: -73.935242,
-//   lat: 40.730610
-// }
-let day = new Date()
-let time = day.getHours()//change it to timezone according to coordinates later
-
 
 async function getTime(){
   try {
@@ -68,7 +66,6 @@ function updateTime(){//change time to am pm
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     dateElement.innerText = days[dateInPlace.getDay()] + ", " + dateInPlace.getDate() + " " + months[dateInPlace.getMonth()] + " " + dateInPlace.getFullYear()
-    //timeElement.innerText = dateInPlace.getHours() + ":" + dateInPlace.getMinutes()
     timeElement.innerText = dateInPlace.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   })
 
@@ -112,9 +109,9 @@ function displayWeather(){
     
     displayWeatherParameter(currentTemperature, currentWeather.main.temp + "°C")
     displayWeatherParameter(weather, currentWeather.weather[0].main)
-    displayWeatherParameter(humidity, currentWeather.main.humidity)
+    displayWeatherParameter(humidity, currentWeather.main.humidity + "%")
     displayWeatherParameter(feelsLike, currentWeather.main.feels_like + "°C")
-    displayWeatherParameter(windSpeed, currentWeather.wind.speed)
+    displayWeatherParameter(windSpeed, currentWeather.wind.speed + " m/s")
   })
 }
 
