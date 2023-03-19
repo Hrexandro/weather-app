@@ -6,6 +6,8 @@ const windSpeed = document.getElementById("wind-speed")
 const town = document.getElementById('town')
 const dateElement = document.getElementById('date')
 const timeElement = document.getElementById('time')
+const townSearchButton = document.getElementById('town-search-button')
+const townSearch = document.getElementById('town-search')
 let currentWeather = null//not used yet
 let units = "metric"
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
@@ -18,6 +20,9 @@ let currentTown = "Toruń"
 let dateInPlace = new Date()
 
 //town error - has to be 'city', 'city, state' or 'city, country'
+townSearchButton.addEventListener('click',()=>{
+  setCurrentTown(townSearch.value)
+})
 
 async function setCurrentTown (townToBeSet){
   try {
@@ -63,7 +68,8 @@ function updateTime(){//change time to am pm
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     dateElement.innerText = days[dateInPlace.getDay()] + ", " + dateInPlace.getDate() + " " + months[dateInPlace.getMonth()] + " " + dateInPlace.getFullYear()
-    timeElement.innerText = dateInPlace.getHours() + ":" + dateInPlace.getMinutes()
+    //timeElement.innerText = dateInPlace.getHours() + ":" + dateInPlace.getMinutes()
+    timeElement.innerText = dateInPlace.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   })
 
 }
@@ -107,7 +113,7 @@ function displayWeather(){
     displayWeatherParameter(currentTemperature, currentWeather.main.temp + "°C")
     displayWeatherParameter(weather, currentWeather.weather[0].main)
     displayWeatherParameter(humidity, currentWeather.main.humidity)
-    displayWeatherParameter(feelsLike, currentWeather.main.feels_like)
+    displayWeatherParameter(feelsLike, currentWeather.main.feels_like + "°C")
     displayWeatherParameter(windSpeed, currentWeather.wind.speed)
   })
 }

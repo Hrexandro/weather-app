@@ -29,3 +29,24 @@ html {
 p {
     color: white;
 }
+
+#weather-display {
+    display: flex;
+    justify-content: space-between;
+}
+
+#town-search {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    caret-color: white;
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+#town-search-button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
