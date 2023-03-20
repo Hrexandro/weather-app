@@ -2,16 +2,13 @@ html {
     width: 100%;
     height: 100%;
     margin: 0;
-
-}
-
-html {
-
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center
+    background-position: center center;
+    font-family: 'montserrat', sans-serif;
 }
+
 
 #morning {
     background-image: url(./images/morning.jpg);
@@ -27,8 +24,9 @@ html {
 }
 
 #weather {
-    font-size: 6vh;
-    margin: 0;
+    font-size: 4rem;
+    margin:0;
+    font-weight: 900;
 }
 
 p {
@@ -56,7 +54,26 @@ p {
 }
 
 #current-temperature {
-    font-size: 4vh;
-    margin: 0;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom:0;
+
 }
+
+#town, #date, #time, #town-search {
+    margin: 0;
+    font-weight:200;
+}
+
+.weather-parameter-right-description {
+    margin-bottom: 0;
+}
+
+.weather-parameter-right {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+
+
 
