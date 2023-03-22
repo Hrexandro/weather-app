@@ -14,6 +14,7 @@ const dateElement = document.getElementById('date')
 const timeElement = document.getElementById('time')
 const townSearchButton = document.getElementById('town-search-button')
 const townSearch = document.getElementById('town-search')
+const errorDisplay = document.getElementById("error-displayer")
 let currentWeather = null//not used yet
 let units = "metric"
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
@@ -25,7 +26,6 @@ let currentLocation = {
 let currentTown = "Toruń"
 let dateInPlace = new Date()
 
-//town error - has to be 'city', 'city, state' or 'city, country'
 townSearchButton.addEventListener('click',()=>{
   setCurrentTown(townSearch.value)
   townSearch.value = ""
@@ -36,10 +36,15 @@ async function setCurrentTown (townToBeSet){
     let response = await fetch(`https://secure.geonames.org/searchJSON?q=${townToBeSet}&maxRows=1&username=${geonamesUserName}`)
     response.json().then(function (response){
       console.log(response)
-      currentLocation.lon = response.geonames[0].lng
-      currentLocation.lat = response.geonames[0].lat
-      currentTown = response.geonames[0].toponymName + (response.geonames[0].countryName ? `, ${response.geonames[0].countryName}` : "")
-      displayUpdatedData()
+      if (response.totalResultsCount === 0){
+        errorDisplay.innerText = "Location not found. Try the format 'city', 'city, state' or 'city, country'."
+      } else {
+        errorDisplay.innerText = ""
+        currentLocation.lon = response.geonames[0].lng
+        currentLocation.lat = response.geonames[0].lat
+        currentTown = response.geonames[0].toponymName + (response.geonames[0].countryName ? `, ${response.geonames[0].countryName}` : "")
+        displayUpdatedData()
+      }
     })
   } catch (error) {
     console.log(error)
