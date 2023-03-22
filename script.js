@@ -15,6 +15,7 @@ const timeElement = document.getElementById('time')
 const townSearchButton = document.getElementById('town-search-button')
 const townSearch = document.getElementById('town-search')
 const errorDisplay = document.getElementById("error-displayer")
+const loading = document.getElementById('loading')
 let currentWeather = null//not used yet
 let units = "metric"
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
@@ -39,6 +40,7 @@ async function setCurrentTown (townToBeSet){
       if (response.totalResultsCount === 0){
         errorDisplay.innerText = "Location not found. Try the format 'city', 'city, state' or 'city, country'."
       } else {
+        loading.innerText = ""
         errorDisplay.innerText = ""
         currentLocation.lon = response.geonames[0].lng
         currentLocation.lat = response.geonames[0].lat
@@ -51,7 +53,7 @@ async function setCurrentTown (townToBeSet){
   }
 }
 
-setCurrentTown(currentTown)
+
 
 async function getTime(){
   try {
@@ -125,7 +127,7 @@ function displayUpdatedData (){
   updateTime()
   town.innerText = currentTown
 }
-
-displayUpdatedData()
+setBackgroundAccordingToTime(5)
+setCurrentTown(currentTown)
 
 
