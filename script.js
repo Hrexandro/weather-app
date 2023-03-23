@@ -9,14 +9,15 @@ const weather = document.getElementById("weather")
 const humidity = document.getElementById("humidity")
 const feelsLike = document.getElementById("feels-like")
 const windSpeed = document.getElementById("wind-speed")
-const town = document.getElementById('town')
-const dateElement = document.getElementById('date')
-const timeElement = document.getElementById('time')
-const townSearchButton = document.getElementById('town-search-button')
-const townSearch = document.getElementById('town-search')
+const town = document.getElementById("town")
+const dateElement = document.getElementById("date")
+const timeElement = document.getElementById("time")
+const townSearchButton = document.getElementById("town-search-button")
+const townSearch = document.getElementById("town-search")
 const errorDisplay = document.getElementById("error-displayer")
-const loading = document.getElementById('loading')
-const unitSwitcher = document.getElementById('unit-switcher')
+const loading = document.getElementById("loading")
+const unitSwitcher = document.getElementById("unit-switcher")
+const currentweatherIcon = document.getElementById("current-weather-icon")
 let currentWeather = null//not used yet
 
 
@@ -34,7 +35,7 @@ let imperial = {
 
 let units = metric
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
-const geonamesUserName = 'hrexandro'
+const geonamesUserName = "hrexandro"
 let currentLocation = {
   lon: 18.5981,
   lat: 53.0137
@@ -42,7 +43,7 @@ let currentLocation = {
 let currentTown = "Toruń"
 let dateInPlace = new Date()
 
-townSearchButton.addEventListener('click',()=>{
+townSearchButton.addEventListener("click",()=>{
   setCurrentTown(townSearch.value)
   townSearch.value = ""
 })
@@ -53,7 +54,7 @@ async function setCurrentTown (townToBeSet){
     response.json().then(function (response){
       console.log(response)
       if (response.totalResultsCount === 0){
-        errorDisplay.innerText = "Location not found. Try the format 'city', 'city, state' or 'city, country'."
+        errorDisplay.innerText = 'Location not found. Try the format "city", "city, state" or "city, country".'
       } else {
         loading.innerText = ""
         errorDisplay.innerText = ""
@@ -68,13 +69,13 @@ async function setCurrentTown (townToBeSet){
   }
 }
 
-unitSwitcher.addEventListener('click',()=>{
-  if (units.name === 'metric'){
+unitSwitcher.addEventListener("click",()=>{
+  if (units.name === "metric"){
     units = imperial
-    unitSwitcher.innerText = 'Change to metric units'
+    unitSwitcher.innerText = "Change to metric units"
   } else {
     units = metric
-    unitSwitcher.innerText = 'Change to Imperial units'
+    unitSwitcher.innerText = "Change to Imperial units"
   }
 
   displayUpdatedData()
@@ -100,7 +101,7 @@ function updateTime(){//change time to am pm
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     dateElement.innerText = days[dateInPlace.getDay()] + ", " + dateInPlace.getDate() + " " + months[dateInPlace.getMonth()] + " " + dateInPlace.getFullYear()
-    timeElement.innerText = dateInPlace.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    timeElement.innerText = dateInPlace.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
   })
 
 }
@@ -140,19 +141,23 @@ function displayWeather(){
   getWeather().then((data) => {
     console.log(data)
     currentWeather = data
-    //string.charAt(0).toUpperCase() + string.slice(1);
     displayWeatherParameter(currentTemperature, currentWeather.main.temp + units.temperature)
-    //displayWeatherParameter(weather, currentWeather.weather[0].main)
-    //displayWeatherParameter(weather, currentWeather.weather[0].description.charAt(0).toUpperCase() + currentWeather.weather[0].description.slice(1))
     displayWeatherParameter(weather, currentWeather.weather[0].description.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()))
-
     displayWeatherParameter(humidity, currentWeather.main.humidity + "%")
     displayWeatherParameter(feelsLike, currentWeather.main.feels_like + units.temperature)
     displayWeatherParameter(windSpeed, currentWeather.wind.speed + units.windSpeed)
+
+    console.log(currentWeather.weather[0].id)
+    if (currentWeather.weather[0].id >= 800){
+      console.log("cloud")
+    }
+
   })
 }
 
 function displayUpdatedData (){
+
+
   displayWeather()
   updateTime()
   town.innerText = currentTown
