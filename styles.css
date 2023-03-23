@@ -24,7 +24,7 @@ html {
 }
 
 #weather {
-    font-size: 4rem;
+    font-size: 3rem;
     margin:0;
     font-weight: 900;
 }
@@ -51,10 +51,11 @@ p {
     border: none;
     background-color: transparent;
     outline: none;
+    cursor: pointer;
 }
 
 #current-temperature {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 900;
     margin-bottom:0;
 
@@ -83,6 +84,11 @@ h1 {
     left: 10px;
     right: 10px;
     text-align: center;
+}
+
+#unit-switcher {
+    font-size: 0.8rem;
+    cursor: pointer;
 }
 
 

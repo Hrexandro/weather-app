@@ -16,8 +16,23 @@ const townSearchButton = document.getElementById('town-search-button')
 const townSearch = document.getElementById('town-search')
 const errorDisplay = document.getElementById("error-displayer")
 const loading = document.getElementById('loading')
+const unitSwitcher = document.getElementById('unit-switcher')
 let currentWeather = null//not used yet
-let units = "metric"
+
+
+let metric = {
+  name: "metric",
+  temperature: "°C",
+  windSpeed: " m/s",
+}
+
+let imperial = {
+  name: "imperial",
+  temperature: "°F",
+  windSpeed: " mph",
+}
+
+let units = metric
 const openWeatherAppId = "762d23cb7577413f8fba8f728324cb17"
 const geonamesUserName = 'hrexandro'
 let currentLocation = {
@@ -52,6 +67,18 @@ async function setCurrentTown (townToBeSet){
     console.log(error)
   }
 }
+
+unitSwitcher.addEventListener('click',()=>{
+  if (units.name === 'metric'){
+    units = imperial
+    unitSwitcher.innerText = 'Change to metric units'
+  } else {
+    units = metric
+    unitSwitcher.innerText = 'Change to Imperial units'
+  }
+
+  displayUpdatedData()
+})
 
 
 
@@ -101,7 +128,7 @@ function displayWeatherParameter (variable, value) {
 
 async function getWeather(){
   try {
-    let response = await fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&appid=${openWeatherAppId}&units=metric`)
+    let response = await fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&appid=${openWeatherAppId}&units=${units.name}`)
     return weatherData = await response.json()
   } catch (error) {
       console.log(error)
@@ -113,12 +140,15 @@ function displayWeather(){
   getWeather().then((data) => {
     console.log(data)
     currentWeather = data
-    
-    displayWeatherParameter(currentTemperature, currentWeather.main.temp + "°C")
-    displayWeatherParameter(weather, currentWeather.weather[0].main)
+    //string.charAt(0).toUpperCase() + string.slice(1);
+    displayWeatherParameter(currentTemperature, currentWeather.main.temp + units.temperature)
+    //displayWeatherParameter(weather, currentWeather.weather[0].main)
+    //displayWeatherParameter(weather, currentWeather.weather[0].description.charAt(0).toUpperCase() + currentWeather.weather[0].description.slice(1))
+    displayWeatherParameter(weather, currentWeather.weather[0].description.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()))
+
     displayWeatherParameter(humidity, currentWeather.main.humidity + "%")
-    displayWeatherParameter(feelsLike, currentWeather.main.feels_like + "°C")
-    displayWeatherParameter(windSpeed, currentWeather.wind.speed + " m/s")
+    displayWeatherParameter(feelsLike, currentWeather.main.feels_like + units.temperature)
+    displayWeatherParameter(windSpeed, currentWeather.wind.speed + units.windSpeed)
   })
 }
 
