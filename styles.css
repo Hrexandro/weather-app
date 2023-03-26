@@ -92,6 +92,12 @@ h1 {
     cursor: pointer;
 }
 
+.right-parameter-external {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 
 
