@@ -1,9 +1,3 @@
-//to do:
-//add loading
-//add error
-//better font
-//icons
-
 const currentTemperature = document.getElementById("current-temperature")
 const weather = document.getElementById("weather")
 const humidity = document.getElementById("humidity")
@@ -91,10 +85,13 @@ async function getTime(){
 
 }
 
-function updateTime(){//change time to am pm
-  getTime().then((data)=>{
-    dateInPlace = new Date(timeData.time)
-    console.log(dateInPlace.getHours())
+function updateTime(){
+  getTime().then(()=>{
+    if (timeData.time){
+      dateInPlace = new Date(timeData.time)
+    } else {
+      dateInPlace = new Date()
+    }
     setBackgroundAccordingToTime(dateInPlace.getHours())
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
