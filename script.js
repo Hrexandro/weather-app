@@ -91,19 +91,10 @@ async function getTime(){
 
 }
 
-function updateTime(){
-  getTime().then(()=>{
-    if (timeData.time){
-      dateInPlace = new Date(timeData.time)
-    } else {
-      dateInPlace = new Date()
-    }
-    setBackgroundAccordingToTime(dateInPlace.getHours())
-    dateElement.innerText = days[dateInPlace.getDay()] + ", " + dateInPlace.getDate() + " " + months[dateInPlace.getMonth()] + " " + dateInPlace.getFullYear()
-    timeElement.innerText = dateInPlace.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
-  })
+// function updateTime(){
 
-}
+
+// }
 
 
 
@@ -147,33 +138,55 @@ async function getDailyForecast(){
 }
 
 
-function displayWeather(){
-  getDailyForecast().then((data) => {
-    for (let i = 1, d = 2; i < 10; i++, d+=2){
-      let dayDiv = document.getElementById(i)
-      let weekDay = dayDiv.getElementsByClassName("day-of-week")[0]
-      let forecastDate = new Date(data.list[d].dt_txt)
-      weekDay.innerText = days[forecastDate.getDay()]
-      let forecastTime = dayDiv.getElementsByClassName("time")[0]
-      console.log(forecastTime)
-      forecastTime.innerText = forecastDate.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
-
-      let maxTemp = dayDiv.getElementsByClassName("max-temp")[0]
-      maxTemp.innerText = data.list[d].main.temp_max + units.temperature
-  
-      let minTemp = dayDiv.getElementsByClassName("min-temp")[0]
-      minTemp.innerText = data.list[d].main.temp_min + units.temperature
-  
-      determineWeatherIcon(dayDiv.getElementsByClassName("path-1")[0], dayDiv.getElementsByClassName("path-2")[0], data.list[d].weather[0].id)
+async function displayWeather(){
+  getTime().then(()=>{
+    if (timeData.time){
+      dateInPlace = new Date(timeData.time)
+    } else {
+      dateInPlace = new Date()
     }
-
-
-    console.log('daily forecast')
-    console.log(data)
-    console.log(data.list[0].main.temp_max)
-    console.log(data.list[0].main.temp_min)
-    console.log(data.list[0].weather[0].description.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()))
+    setBackgroundAccordingToTime(dateInPlace.getHours())
+    dateElement.innerText = days[dateInPlace.getDay()] + ", " + dateInPlace.getDate() + " " + months[dateInPlace.getMonth()] + " " + dateInPlace.getFullYear()
+    timeElement.innerText = dateInPlace.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
   })
+  .then(//ensure time has been fetched and set
+    getDailyForecast().then((data) => {
+      console.log(dateInPlace)
+      //dateInPlace.setTime(date.getTime() + hours * 60 * 60 * 1000);
+      //dateInPlace.getTime()
+      for (let i = 1, d = 2; i < 10; i++, d+=2){
+        let dayDiv = document.getElementById(i)
+        let weekDay = dayDiv.getElementsByClassName("day-of-week")[0]
+  
+  
+        let forecastDate = new Date()
+        console.log(forecastDate)
+        forecastDate.setTime(dateInPlace.getTime() + d * 3 * 60 * 60 * 1000)//add correct time increments to the forecasts based on the current time in locale
+        console.log(forecastDate)
+        weekDay.innerText = days[forecastDate.getDay()]
+        let forecastTime = dayDiv.getElementsByClassName("time")[0]
+        //console.log(forecastTime)
+        forecastTime.innerText = forecastDate.toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
+  
+        let maxTemp = dayDiv.getElementsByClassName("max-temp")[0]
+        maxTemp.innerText = data.list[d].main.temp_max + units.temperature
+    
+        let minTemp = dayDiv.getElementsByClassName("min-temp")[0]
+        minTemp.innerText = data.list[d].main.temp_min + units.temperature
+    
+        determineWeatherIcon(dayDiv.getElementsByClassName("path-1")[0], dayDiv.getElementsByClassName("path-2")[0], data.list[d].weather[0].id)
+      }
+  
+  
+      console.log('daily forecast')
+      console.log(data)
+      console.log(data.list[0].main.temp_max)
+      console.log(data.list[0].main.temp_min)
+      console.log(data.list[0].weather[0].description.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()))
+    })
+
+  )
+
 
   getCurrentWeather().then((data) => {
     currentWeather = data
@@ -213,8 +226,8 @@ function determineWeatherIcon(svgFirstPath, svgSecondPath, weatherId) {
 
 function displayUpdatedData (){
   townSearch.value = ""
+
   displayWeather()
-  updateTime()
   town.innerText = currentTown
 }
 
