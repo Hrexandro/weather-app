@@ -91,14 +91,6 @@ async function getTime(){
 
 }
 
-// function updateTime(){
-
-
-// }
-
-
-
-
 
 function setBackgroundAccordingToTime(timeData){
   if (timeData >= 16 && timeData < 22){

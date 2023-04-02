@@ -105,4 +105,74 @@ h1 {
 
 
 
+@media (max-width: 1000px){
+    /* #forecast-display{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+    } */
+    .daily-container {
+        margin-bottom: 1em;
+    }
+
+    #weather {
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+
+    #current-temperature {
+        font-size: 1.5rem;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+
+    #unit-switcher {
+        font-size: 0.4rem;
+    }
+
+    .daily-weather-icon{
+        width: 50px;
+        height: 50px;
+    }
+}
+
+
+@media (max-width: 800px){
+    #forecast-display{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+    }
+    .daily-container {
+        margin-bottom: 1em;
+    }
+
+    #weather {
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+
+    #current-temperature {
+        font-size: 1.5rem;
+    }
+    h1 {
+        font-size: 3rem;
+    }
+
+    #unit-switcher {
+        font-size: 0.4rem;
+    }
+
+    .daily-weather-icon{
+        width: 50px;
+        height: 50px;
+    }
+}
+  
+
+
+
 
