@@ -163,8 +163,8 @@ async function displayWeather(){
         let maxTemp = dayDiv.getElementsByClassName("max-temp")[0]
         maxTemp.innerText = data.list[d].main.temp_max + units.temperature
     
-        let minTemp = dayDiv.getElementsByClassName("min-temp")[0]
-        minTemp.innerText = data.list[d].main.temp_min + units.temperature
+        // let minTemp = dayDiv.getElementsByClassName("min-temp")[0]
+        // minTemp.innerText = data.list[d].main.temp_min + units.temperature
     
         determineWeatherIcon(dayDiv.getElementsByClassName("path-1")[0], dayDiv.getElementsByClassName("path-2")[0], data.list[d].weather[0].id)
       }

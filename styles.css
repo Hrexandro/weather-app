@@ -69,6 +69,7 @@ p {
 
 .weather-parameter-right-description {
     margin-bottom: 0;
+    font-size: 1rem;
 }
 
 .weather-parameter-right {
@@ -103,6 +104,14 @@ h1 {
     justify-content: space-between;
 }
 
+body {
+    display: flex;
+
+    justify-content: space-between;
+    flex-direction: column;
+    height: 90%;
+}
+
 
 
 @media (max-width: 1000px){
@@ -113,7 +122,7 @@ h1 {
         align-items: center;
     } */
     .daily-container {
-        margin-bottom: 1em;
+        margin-bottom: 0;
     }
 
     #weather {
@@ -121,20 +130,28 @@ h1 {
         font-weight: 900;
     }
 
-    #current-temperature {
-        font-size: 1.5rem;
-    }
     h1 {
         font-size: 3rem;
     }
-
+    
     #unit-switcher {
-        font-size: 0.4rem;
+        font-size: 0.6rem;
     }
 
     .daily-weather-icon{
         width: 50px;
         height: 50px;
+    }
+
+    .weather-parameter-right-description {
+        margin-bottom: 0;
+        font-size: 0.8rem;
+    }
+    .weather-parameter {
+        font-size: 0.9rem;
+    }
+    #current-temperature {
+        font-size: 1.5rem;
     }
 }
 
@@ -142,12 +159,12 @@ h1 {
 @media (max-width: 800px){
     #forecast-display{
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-direction: column;
         align-items: center;
     }
     .daily-container {
-        margin-bottom: 1em;
+        margin-bottom: 0;
     }
 
     #weather {
@@ -163,12 +180,40 @@ h1 {
     }
 
     #unit-switcher {
-        font-size: 0.4rem;
+        font-size: 0.5rem;
     }
 
     .daily-weather-icon{
         width: 50px;
         height: 50px;
+    }
+
+    .daily-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        width:40%;
+    }
+
+    /* .temp-container {
+        margin: 0 1rem;
+    } */
+
+    .max-temp {
+        font-size: 1.1rem;
+    }
+
+    .min-temp {
+        font-size: 0.9rem;
+    }
+
+    body {
+        justify-content: flex-start;
+    }
+
+    #error-displayer {
+        font-size:0.7rem;
     }
 }
   
